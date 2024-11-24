@@ -1,4 +1,7 @@
 from django.db import models
+from autoslug import AutoSlugField
+from django.utils.text import slugify
+from django.utils import timezone
 
 # Create your models here.
 class Category(models.Model):
