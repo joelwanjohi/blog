@@ -2,17 +2,17 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render , get_object_or_404, redirect
 
-from HOME.models import Blog, Category
+from HOME.models import Blog, Category, Comment
 
 # Create your views here.
 def index(request):
-     post = Blog.objects.order_by('-id')
-     main_post = Blog.objects.order_by('-id').filter(Main_post = True)[0:1]
-     recent = Blog.objects.filter(section = 'Recent').order_by('-id')[:5]
-     popular = Blog.objects.filter(section='Popular').order_by('-id')[0:5]
-     cat = Category.objects.all()
+    post = Blog.objects.order_by('-id')
+    main_post = Blog.objects.order_by('-id').filter(Main_post = True)[0:1]
+    recent = Blog.objects.filter(section = 'Recent').order_by('-id')[:5]
+    popular = Blog.objects.filter(section='Popular').order_by('-id')[0:5]
+    cat = Category.objects.all()
 
-     context = {
+    context = {
         'post': post,
         'main_post': main_post,
         'recent': recent, 
@@ -20,9 +20,8 @@ def index(request):
         'popular': popular
 
     }
-     return render(request, "index.html")
-
-
+    
+    return render(request, "index.html", context)
 
 
 def blog_detail(request,slug):
@@ -33,17 +32,18 @@ def blog_detail(request,slug):
     post.views +=1
     post.save()
 
-    # comments = Comment.objects.filter(blog_id = post.id).order_by('-date')
+    comments = Comment.objects.filter(blog_id = post.id).order_by('-date')
 
     context = {
         # 'posts': post,
          'category': category,
          'post' : post,
-        #  'comments': comments
+         'comments': comments
  
     }
 
     return render (request, "blog_detail.html", context)
+
 
 def category(request, slug):
     cat = category.objects.all()
@@ -55,3 +55,30 @@ def category(request, slug):
 
     }
     return render (request, 'category.html',context)
+
+def add_comment(request,slug):
+     
+    if request.method == 'POST':
+        post = get_object_or_404(Blog, blog_slug = slug)
+        name = request.POST.get('InputName')
+        email = request.POST.get('InputEmail')
+        website = request.POST.get('InputWeb')
+        comment_text = request.POST.get('InputComment')
+        parent_id = request.POST.get('parent_id')
+        parent_comment = None
+        
+        if parent_id:
+            parent_comment = get_object_or_404(Comment, id=parent_id)
+
+        Comment.objects.create(
+            post= post,
+            name=name,
+            email=email,
+            website=website,
+            comment=comment_text,
+            parent=parent_comment
+        )
+        return redirect("blog_detail",slug=post.blog_slug)
+    return redirect('blog_detail')
+
+
