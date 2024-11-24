@@ -44,3 +44,29 @@ class Blog(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title} ({self.category})"
+
+
+class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    post = models.ForeignKey(Blog, related_name='comments', on_delete=models.CASCADE)
+    blog_id = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    website = models.URLField(blank=True, null=True)
+    comment = models.TextField()
+    date = models.DateField(default=timezone.now)
+    parent = models.ForeignKey('self',null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+
+    def save(self, *args, **kwargs):
+        if self.post :
+            self.blog_id = self.post.id
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name 
+    
+
+    
+
+
+
