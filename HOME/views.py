@@ -2,7 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render , get_object_or_404, redirect
 
-from HOME.models import Blog, Category, Comment
+from HOME.models import Blog, Category
+from HOME.models import Blog, Category, Comment  
+
 
 # Create your views here.
 def index(request):
