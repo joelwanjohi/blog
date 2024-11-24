@@ -9,6 +9,7 @@ urlpatterns = [
  
     path("", views.index, name="index"),
     path("<str:slug>", views.blog_detail, name='blog_detail'),
+    path("category/<str:slug>", views.category, name="category"),
     
 ]
 if settings.DEBUG:
