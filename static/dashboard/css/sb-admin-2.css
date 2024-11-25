@@ -11,7 +11,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
-  --blue: #1cc88a; /* Replaced with green */
+  --blue: #18a513; /* Replaced with green */
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -24,7 +24,7 @@
   --white: #fff;
   --gray: #858796;
   --gray-dark: #5a5c69;
-  --primary: #1cc88a; /* Replaced primary with green */
+  --primary: #18a513; /* Replaced primary with green */
   --secondary: #858796;
   --success: #1cc88a;
   --info: #20c9a6; /* Changed info to teal */
@@ -160,7 +160,7 @@ sup {
 }
 
 a {
-  color: #4e73df;
+  color: #18a513;
   text-decoration: none;
   background-color: transparent;
 }
@@ -10407,7 +10407,7 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
-  color: #4e73df;
+  color: #18a513;
   font-weight: 700;
 }
 
